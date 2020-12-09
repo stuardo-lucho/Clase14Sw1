@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <jsp:useBean id="listaEmpleados" type="ArrayList<Employee>" scope="request"/>
+<jsp:useBean type="Beans.Employee" scope="session" id="employeeSession"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,10 +20,12 @@
                 <div class="col-lg-6">
                     <h1 class=''>Lista de empleados</h1>
                 </div>
+                <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("ST_CLERK")) { %>
                 <div class="col-lg-6 my-auto text-lg-right">
                     <a href="<%= request.getContextPath()%>/EmployeeServlet?action=agregar" class="btn btn-primary">Agregar
                         nuevo empleado</a>
                 </div>
+                <% } %>
             </div>
             <table class="table">
                 <thead>
@@ -35,8 +38,10 @@
                         <th>Commision</th>
                         <th>Manager</th>
                         <th>Department</th>
+                        <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("ST_CLERK")) { %>
                         <th></th>
                         <th></th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,8 +66,10 @@
                         </td>
                         <td><%= e.getDepartment() == null ? "--" : e.getDepartment().getDepartmentName()%>
                         </td>
+                        <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("ST_CLERK")) { %>
                         <td><a href="EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>">Editar</a></td>
                         <td><a href="EmployeeServlet?action=borrar&id=<%= e.getEmployeeId()%>">Borrar</a></td>
+                        <% } %>
                     </tr>
                     <%
                             i++;

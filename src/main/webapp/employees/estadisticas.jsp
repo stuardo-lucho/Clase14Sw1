@@ -3,6 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <jsp:useBean id="listaEmpleadPorRegion" type="java.util.ArrayList<Dtos.EmpleadosPorRegionDto>" scope="request"/>
 <jsp:useBean id="listaSalarioPorDepa" type="java.util.ArrayList<Dtos.SalarioPorDepartamentoDto>" scope="request"/>
+<jsp:useBean type="Beans.Employee" scope="session" id="employeeSession"/>
 <!DOCTYPE html>
 <html>
     <head>

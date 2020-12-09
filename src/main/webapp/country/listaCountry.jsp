@@ -1,7 +1,9 @@
-<%@page import="Beans.Country"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean type="ArrayList<Country>" scope="request" id="lista"  />
+<%@page import="Beans.Country" %>
+<%@page import="java.util.ArrayList" %>
+<%@ page import="Beans.Employee" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<jsp:useBean type="ArrayList<Country>" scope="request" id="lista"/>
+<jsp:useBean type="Beans.Employee" scope="session" id="employeeSession"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,34 +14,44 @@
     <body>
         <div class='container'>
             <jsp:include page="../includes/navbar.jsp">
-                <jsp:param name="currentPage" value="cou" />
+                <jsp:param name="currentPage" value="cou"/>
             </jsp:include>
             <div class="row mb-5 mt-4">
                 <div class="col-lg-6">
                     <h1 class=''>Lista de Paises</h1>
                 </div>
+                <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("AD_VP")) { %>
                 <div class="col-lg-6 my-auto text-lg-right">
-                    <a href="<%= request.getContextPath()%>/CountryServlet?action=formCrear" class="btn btn-primary">Crear País</a>
+                    <a href="<%= request.getContextPath()%>/CountryServlet?action=formCrear" class="btn btn-primary">Crear
+                        País</a>
                 </div>
+                <% } %>
             </div>
             <table class="table">
                 <tr>
-                    <th>#</th> 
+                    <th>#</th>
                     <th>Country ID</th>
                     <th>Country name</th>
                     <th>Region ID</th>
+                    <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("AD_VP")) { %>
                     <th></th>
                     <th></th>
+                    <% } %>
                 </tr>
                 <%
                     int i = 1;
                     for (Country country : lista) {
                 %>
                 <tr>
-                    <td><%=i%></td>
-                    <td><%=country.getCountryId()%></td>
-                    <td><%=country.getCountryName() %></td>
-                    <td><%=country.getRegionId()%></td>
+                    <td><%=i%>
+                    </td>
+                    <td><%=country.getCountryId()%>
+                    </td>
+                    <td><%=country.getCountryName() %>
+                    </td>
+                    <td><%=country.getRegionId()%>
+                    </td>
+                    <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("AD_VP")) { %>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=editar&id=<%=country.getCountryId()%>">
                             Editar
@@ -50,6 +62,7 @@
                             Borrar
                         </a>
                     </td>
+                    <% } %>
                 </tr>
                 <%
                         i++;

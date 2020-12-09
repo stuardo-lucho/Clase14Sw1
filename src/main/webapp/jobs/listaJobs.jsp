@@ -2,6 +2,7 @@
 <%@page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <jsp:useBean type="ArrayList<Job>" scope="request" id="lista"/>
+<jsp:useBean type="Beans.Employee" scope="session" id="employeeSession"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,10 +19,12 @@
                 <div class="col-lg-6">
                     <h1 class=''>Lista de trabajos en hr</h1>
                 </div>
+                <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("IT_PROG")) { %>
                 <div class="col-lg-6 my-auto text-lg-right">
                     <a href="<%= request.getContextPath()%>/JobServlet?action=formCrear" class="btn btn-primary">Crear
                         Trabajo</a>
                 </div>
+                <% } %>
             </div>
             <% if (session.getAttribute("info") != null) { %>
             <div>
@@ -37,8 +40,10 @@
                     <th>Job Name</th>
                     <th>Min Salary</th>
                     <th>Max Salary</th>
+                    <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("IT_PROG")) { %>
                     <th></th>
                     <th></th>
+                    <% } %>
                 </tr>
                 <%
                     int i = 1;
@@ -55,6 +60,7 @@
                     </td>
                     <td><%=job.getMaxSalary()%>
                     </td>
+                    <% if (employeeSession.getJob().getJobId().equals("AD_PRES") || employeeSession.getJob().getJobId().equals("IT_PROG")) { %>
                     <td>
                         <a href="<%=request.getContextPath()%>/JobServlet?action=editar&id=<%=job.getJobId()%>">
                             Editar
@@ -65,6 +71,7 @@
                             Borrar
                         </a>
                     </td>
+                    <% } %>
                 </tr>
                 <%
                         i++;
